@@ -1,12 +1,9 @@
-// index.js
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
-// Middleware para interpretar dados de formulário
 app.use(express.urlencoded({ extended: true }));
 
-// Simulação de uma "base de dados" em memória
 let compromissos = [
   { id: 1, titulo: 'Reunião com equipe', data: '2025-10-15', hora: '10:00' },
   { id: 2, titulo: 'Consulta médica', data: '2025-10-16', hora: '14:30' }
@@ -23,7 +20,6 @@ const header = `
   </style>
   <header>
     <nav>
-      <a href="/agenda">Agenda</a>
       <a href="/marcar">Marcar Compromisso</a>
       <a href="/modificar">Modificar Compromisso</a>
     </nav>
@@ -31,7 +27,7 @@ const header = `
 `;
 
 
-app.get('/agenda', (req, res) => {
+app.get('/', (req, res) => {
   const lista = compromissos.map(c => `<li><strong>${c.titulo}</strong> - ${c.data} às ${c.hora}</li>`).join('');
   res.send(`
     <html>
@@ -69,7 +65,7 @@ app.post('/marcar', (req, res) => {
   const { titulo, data, hora } = req.body;
   const novoId = compromissos.length + 1;
   compromissos.push({ id: novoId, titulo, data, hora });
-  res.redirect('/agenda');
+  res.redirect('/');
 });
 
 app.get('/modificar', (req, res) => {
@@ -102,9 +98,9 @@ app.post('/modificar', (req, res) => {
     compromisso.data = data;
     compromisso.hora = hora;
   }
-  res.redirect('/agenda');
+  res.redirect('/');
 });
 
 app.listen(port, () => {
-  console.log(`http://localhost:${port}/agenda`);
+  console.log(`http://localhost:${port}/`);
 });
