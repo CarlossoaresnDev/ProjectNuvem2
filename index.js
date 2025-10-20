@@ -5,7 +5,7 @@ const port = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true }));
 
 let compromissos = [
-  { id: 1, titulo: 'Reunião de Trabalho', data: '2025-10-15', hora: '10:00' },
+  { id: 1, titulo: 'Reunião de Equipes', data: '2025-10-15', hora: '10:00' },
   { id: 2, titulo: 'Consulta médica', data: '2025-10-16', hora: '14:30' }
 ];
 
